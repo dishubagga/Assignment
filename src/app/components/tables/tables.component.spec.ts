@@ -1,14 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { EmployeeModel } from '../models/employee.model';
+import { EmployeeModel } from '../../models/employee.model';
 import { TablesComponent } from './tables.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { GetEmployeeDataService } from '../services/get-employee-data.service';
-import { MockGetEmployeeDataService } from '../../testing/get-employee-data-mock.service';
+import { GetEmployeeDataService } from '../../services/get-employee-data.service';
+import { MockGetEmployeeDataService } from '../../../testing/get-employee-data-mock.service';
 import { UnsubscriptionError, Subscription, of } from 'rxjs';
+import { TranslateService, TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
+import { TranslateTestingModule } from 'ngx-translate-testing';
+
+declare var require: any;
+
+
 describe('TablesComponent', () => {
   let component: TablesComponent;
   let fixture: ComponentFixture<TablesComponent>;
   let getEmpDataService: GetEmployeeDataService;
+  let translateService: TranslateService;
   const mockEmployeeData: EmployeeModel[] = [
     { 'id': 11, 'firstName': 'Dishu', 'lastName': 'Bagga', 'address': 'Via 41 Arezzo', 'gender': 'Male', 'phoneNumber': '01762236562' },
     { 'id': 12, 'firstName': 'Akash', 'lastName': 'Bagga', 'address': 'Via 42 Arezzo', 'gender': 'Male', 'phoneNumber': '04442173222' },
@@ -17,9 +24,20 @@ describe('TablesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [TablesComponent],
       providers: [
-        { provide: GetEmployeeDataService, useClass: MockGetEmployeeDataService }
+        { provide: GetEmployeeDataService, useClass: MockGetEmployeeDataService },
+        TranslateService
       ],
-      imports: [HttpClientTestingModule]
+      imports: [
+        HttpClientTestingModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateFakeLoader
+          }
+        }),
+        TranslateTestingModule.withTranslations({ en: require('src/assets/i18n/en.json'), de: require('src/assets/i18n/de.json') }),
+
+      ]
     })
       .compileComponents();
   }));
@@ -27,17 +45,39 @@ describe('TablesComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TablesComponent);
     getEmpDataService = TestBed.inject(GetEmployeeDataService);
+    translateService = TestBed.inject(TranslateService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+  afterEach(() => {
+    getEmpDataService = null;
+    translateService = null;
+  });
 
-  it('should create', () => {
+  // it('should translate change a language', async(() => {
+  //   translateService.use('de');
+  //   fixture.detectChanges();
+  //   const compiled = fixture.debugElement.nativeElement;
+
+  //   expect(component.columnDefs[0].headerName).toContain('GERMANTITLE');
+  // }));
+
+  it('should screate', () => {
     expect(component).toBeTruthy();
   });
+
   it('it should subscribe for data', () => {
     spyOn(getEmpDataService, 'getEmployeeData').and.callThrough();
     component.ngOnInit();
     expect(getEmpDataService.getEmployeeData).toHaveBeenCalled();
+  });
+
+
+
+  it('It should destroy on OnDestroy', () => {
+    spyOn(component, 'OnDestroy').and.callThrough();
+    component.OnDestroy();
+    expect(component.OnDestroy).toHaveBeenCalled();
   });
 
 

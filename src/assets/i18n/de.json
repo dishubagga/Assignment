@@ -1,0 +1,10 @@
+{
+  "demo": {
+    "id": "Id",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "gender": "Geschlecht",
+    "address": "Adresse",
+    "phoneNumber": "Telefonnummer"
+  }
+}

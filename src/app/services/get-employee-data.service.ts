@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class GetEmployeeDataService {
-  readonly BASE_URL: string = 'http://127.0.0.1:5000/employeedata';
+  readonly BASE_URL: string = 'http://0.0.0.0:3000/employeedata';
 
   constructor(private httpClient: HttpClient) { }
 
