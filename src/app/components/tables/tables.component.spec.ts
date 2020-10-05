@@ -54,14 +54,6 @@ describe('TablesComponent', () => {
     translateService = null;
   });
 
-  // it('should translate change a language', async(() => {
-  //   translateService.use('de');
-  //   fixture.detectChanges();
-  //   const compiled = fixture.debugElement.nativeElement;
-
-  //   expect(component.columnDefs[0].headerName).toContain('GERMANTITLE');
-  // }));
-
   it('should screate', () => {
     expect(component).toBeTruthy();
   });

@@ -12,22 +12,15 @@ import { AgGridAngular } from 'ag-grid-angular';
 })
 
 export class TablesComponent implements OnInit {
+
   private _sub: Subscription;
   private _clientTranslation: Subscription;
   private _socketSubscription: Subscription;
-  @ViewChild('agGrid') agGrid: AgGridAngular;
-  rowData: EmployeeModel[] = [];
-  storeData: EmployeeModel[] = [];
-  firstName: string;
-  showData: EmployeeModel[] = [{
-    'id': 7, 'firstName': 'Sahil', 'lastName': 'Bagga', 'address': 'Via 43 Arezzo', 'gender': 'Male',
-    'phoneNumber': '01763436562'
-  },
-  {
-    'id': 8, 'firstName': 'Marco', 'lastName': 'Giannini', 'address': 'Via 44 Arezzo', 'gender': 'Male',
-    'phoneNumber': '01762236562'
-  }];
 
+  @ViewChild('agGrid') agGrid: AgGridAngular;
+
+  rowData: EmployeeModel[] = [];
+  firstName: string;
   columnDefs = [];
 
 

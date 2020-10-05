@@ -5,11 +5,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SocketService {
-  private socket;
+  public socket;
+
   constructor() {
     this.socket = io.connect('http://127.0.0.1:5000/');
     this.sendMessage('Hello to server');
-
   }
   public sendMessage(message): void {
     this.socket.emit('connect');
